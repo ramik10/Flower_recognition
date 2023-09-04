@@ -7,11 +7,12 @@ from keras.models import load_model
 from PIL import Image
 import numpy as np
 from json import dumps
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 # Load the trained model
-model = load_model("C:/Users/ramik/Downloads/trainedModel/")
+model = load_model("./trainedModel/")
 
 # Define a function to preprocess an image for prediction
 def preprocess_image(image):
@@ -36,15 +37,15 @@ def predict():
             predicted_class = np.argmax(prediction)
             class_probabilities = prediction.tolist()[0]
             if (predicted_class==0):
-                class_id = "daisy"
+                class_id = "Daisy"
             elif (predicted_class==1):
-                class_id = "dandelion"
+                class_id = "Dandelion"
             elif (predicted_class==2):
-                class_id = "rose"
+                class_id = "Rose"
             elif (predicted_class==3):
-                class_id = "sunflower"
+                class_id = "Sunflower"
             else:
-                class_id = "tulip"
+                class_id = "Tulip"
             # Provide the result as JSON
             response = {
                 'class_id': class_id,
